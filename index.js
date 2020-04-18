@@ -22,6 +22,9 @@ var server = http.createServer(function (req, res) {
   //Get the HTTP method
   var method = req.method.toLowerCase();
 
+  //Get headers as an object
+  var headers = req.headers;
+
   //Send the response
   res.end("Hello world\n");
 
@@ -34,6 +37,7 @@ var server = http.createServer(function (req, res) {
       "with query string parameter: ",
     queryStringObject
   );
+  console.log("header are", headers);
 });
 
 //Get the url and parse it
