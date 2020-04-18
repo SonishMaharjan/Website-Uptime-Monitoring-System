@@ -9,17 +9,31 @@ var url = require("url");
 // Ther server should respond to all requests with a string
 var server = http.createServer(function (req, res) {
   //Get the URL and parse it
+  //if true parse the query string
   var parsedUrl = url.parse(req.url, true);
 
   //Get the path //if url is http://localhost.com:3000/users -> path is users
   var path = parsedUrl.pathname;
   var trimmedPath = path.replace(/^\/+|\/+$/g, "");
 
+  //Get the query string as an object
+  var queryStringObject = parsedUrl.query;
+
+  //Get the HTTP method
+  var method = req.method.toLowerCase();
+
   //Send the response
   res.end("Hello world\n");
 
   //Log the request path
-  console.log("Request received on path: " + trimmedPath);
+  console.log(
+    "Request received on path: " +
+      trimmedPath +
+      "with method: " +
+      method +
+      "with query string parameter: ",
+    queryStringObject
+  );
 });
 
 //Get the url and parse it
