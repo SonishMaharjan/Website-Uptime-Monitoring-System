@@ -1,0 +1,6 @@
+*command for creating** 
+openssl req -newkey rsa:2408 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem
+
+
+*For Common Name (e.g. server FQDN or YOUR name) []:localhost
+in production use other
