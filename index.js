@@ -5,6 +5,7 @@
 //Dependency
 var http = require("http");
 var url = require("url");
+var StringDecoder = require("string_decoder").StringDecoder;
 
 // Ther server should respond to all requests with a string
 var server = http.createServer(function (req, res) {
@@ -25,19 +26,23 @@ var server = http.createServer(function (req, res) {
   //Get headers as an object
   var headers = req.headers;
 
-  //Send the response
-  res.end("Hello world\n");
+  //Get playloads, if any
+  var decoder = new StringDecoder("utf-8");
+  var buffer = "";
 
-  //Log the request path
-  console.log(
-    "Request received on path: " +
-      trimmedPath +
-      "with method: " +
-      method +
-      "with query string parameter: ",
-    queryStringObject
-  );
-  console.log("header are", headers);
+  req.on("data", function (data) {
+    buffer += decoder.write(data);
+  });
+
+  req.on("end", function () {
+    buffer += decoder.end();
+
+    //Send the response
+    res.end("Hello world\n");
+
+    //Log the request path
+    console.log("the request playload is : ", buffer);
+  });
 });
 
 //Get the url and parse it
