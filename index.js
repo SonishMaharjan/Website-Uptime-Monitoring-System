@@ -71,6 +71,7 @@ var unifiedServer = function (req, res) {
   var decoder = new StringDecoder("utf-8");
   var buffer = "";
 
+  //call every time when the payload is received
   req.on("data", function (data) {
     buffer += decoder.write(data);
   });
