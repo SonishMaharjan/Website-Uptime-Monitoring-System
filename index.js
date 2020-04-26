@@ -7,8 +7,12 @@ var http = require("http");
 var https = require("https");
 var url = require("url");
 var StringDecoder = require("string_decoder").StringDecoder;
-var config = require("./config");
+var config = require("./lib/config");
 var fs = require("fs");
+
+//My lib
+var handlers = require("./lib/handlers");
+var helpers = require("./lib/helpers");
 
 // Instantiating http server
 var httpServer = http.createServer(function (req, res) {
@@ -21,15 +25,14 @@ var httpsServerOptions = {
   cert: fs.readFileSync("./https/cert.pem"),
 };
 
-var httpsServer = https.createServer(httpsServerOptions, function (
-  req,
-  res
-) {});
+var httpsServer = https.createServer(httpsServerOptions, function (req, res) {
+  unifiedServer(req, res);
+});
 
 //Start the http server, and have it listten on port 3000
 httpServer.listen(config.httpPort, function () {
   console.log(
-    "The server is listening on port " +
+    "The http server is listening on port " +
       config.httpPort +
       "in " +
       config.envName +
@@ -40,7 +43,7 @@ httpServer.listen(config.httpPort, function () {
 //Start https server
 httpsServer.listen(config.httpsPort, function () {
   console.log(
-    "The server is listening on port " +
+    "The https server is listening on port " +
       config.httpsPort +
       "in " +
       config.envName +
@@ -91,7 +94,7 @@ var unifiedServer = function (req, res) {
       queryStringObject: queryStringObject,
       method: method,
       headers: headers,
-      payload: buffer,
+      payload: helpers.parseJsonToObject(buffer),
     };
 
     //Route the request to the handler specified in the router
@@ -109,7 +112,7 @@ var unifiedServer = function (req, res) {
       res.setHeader("Content-Type", "application/json");
       res.writeHead(statusCode);
       res.end(payloadString);
-
+      // console.log("hello wor");
       //log the response
       console.log("Returning this response:", statusCode, payloadString);
     });
@@ -119,23 +122,8 @@ var unifiedServer = function (req, res) {
   });
 };
 
-//Define handlers
-var handlers = {};
-
-handlers.ping = function (data, callback) {
-  callback(200);
-};
-
-handlers.sample = function (data, callback) {
-  callback(406, { name: "sample handler is in callback" });
-};
-
-handlers.notFound = function (data, callback) {
-  callback(404);
-};
-
 // Define a request router
 var router = {
-  sample: handlers.sample,
   ping: handlers.ping,
+  users: handlers.users,
 };
