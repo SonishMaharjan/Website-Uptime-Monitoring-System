@@ -76,6 +76,7 @@ var unifiedServer = function (req, res) {
 
   //call every time when the payload is received
   req.on("data", function (data) {
+    //data is in binary form
     buffer += decoder.write(data);
   });
 
@@ -100,19 +101,20 @@ var unifiedServer = function (req, res) {
     //Route the request to the handler specified in the router
     chosenHandler(data, function (statusCode, payload) {
       //Use the status code called back by the handler, or default  to 200
-      statusCodue = typeof statusCode == "number" ? statusCode : 200;
+      statusCode = typeof statusCode == "number" ? statusCode : 200;
 
       //Use the payload called backed by the handler, or default to empty object
       payload = typeof payload == "object" ? payload : {};
 
       //Convert the payload to a string
       var payloadString = JSON.stringify(payload);
+      // console.log("hello world");
 
       //Return the response
       res.setHeader("Content-Type", "application/json");
       res.writeHead(statusCode);
       res.end(payloadString);
-      // console.log("hello wor");
+
       //log the response
       console.log("Returning this response:", statusCode, payloadString);
     });
