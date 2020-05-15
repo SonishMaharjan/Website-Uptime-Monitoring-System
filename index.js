@@ -2,6 +2,8 @@
  * Primary file for API
  */
 
+require("dotenv").config();
+
 //Dependency
 var http = require("http");
 var https = require("https");
@@ -13,6 +15,11 @@ var fs = require("fs");
 //My lib
 var handlers = require("./lib/handlers");
 var helpers = require("./lib/helpers");
+
+//@TODO remoove this
+helpers.sendTwiloSms("9860152343", "Hello sonis", function (err) {
+  console.log("this was the error: ", err);
+});
 
 // Instantiating http server
 var httpServer = http.createServer(function (req, res) {
