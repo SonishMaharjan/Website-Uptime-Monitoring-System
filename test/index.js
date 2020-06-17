@@ -2,43 +2,13 @@
  * Test runner
  */
 
-//Dependencies
-var helpers = require("./../lib/helpers");
-var assert = require("assert");
-
 //Application logic for the test runner
 _app = {};
 
 //Constainer for the tests
-_app.tests = {
-  unit: {},
-};
+_app.tests = {};
 
-//Assert that the getANumber function is returning a number
-_app.tests.unit["helpers.getANumber should return a number"] = function (done) {
-  var val = helpers.getANumber();
-  assert.equal(typeof val, "number");
-  done();
-};
-
-//Assert that the getANumber function is returning a 1
-_app.tests.unit["helpers.getANumber should return a number 1"] = function (
-  done
-) {
-  var val = helpers.getANumber();
-  assert.equal(val, 1);
-  done();
-};
-
-//Assert that the getANumber function is returning a 2
-_app.tests.unit["helpers.getANumber return a number 2"] = function (done) {
-  var val = helpers.getANumber();
-  assert.equal(val, 2);
-  done();
-};
-
-//@todo remove
-// _app.tests.unit["hello"] = "WORLD";
+_app.tests.unit = require("./unit");
 
 //count all the tests
 _app.countTests = function () {
@@ -67,8 +37,8 @@ _app.runTests = function () {
     var subTests = _app.tests[key];
     for (var testName in subTests) {
       if (subTests.hasOwnProperty(testName)) {
-        var tempTestName = testName;
-        var testValue = subTests[testName];
+        let tempTestName = testName;
+        let testValue = subTests[testName];
 
         //Call the test
         try {
@@ -81,14 +51,16 @@ _app.runTests = function () {
             if (counter == limit) {
               _app.produceTestReport(limit, sucessess, errors);
             }
-          });
+            // console.log(subTests);
+            // console.log("key---");
+            // console.log(key);
+          }, tempTestName);
         } catch (e) {
           //If it throws, then it failed, so capture the error thrown and log it in  red
           errors.push({
             name: testName,
             error: e,
           });
-
           console.log("\x1b[31m%s\x1b[0m", tempTestName);
           counter++;
           if (counter == limit) {
