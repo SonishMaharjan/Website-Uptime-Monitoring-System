@@ -1,1 +1,5 @@
-NODE_DEBUG=server node index.js
+//printin debug('tst") in stdout
+//run cmd
+NODE_DEBUG=server_test node index.js
+//server text refer to folloing server_text on server.js
+var debug = util.debuglog('server_text')
