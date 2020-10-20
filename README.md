@@ -1,7 +1,8 @@
 # Website/API-Uptime-Monitoring-System
 
 ## Table of contents
-* [General info](#general-info)
+* [General Info](#general-info)
+* [Features](#features)
 * [Technologies](#technologies)
 * [Setup](#setup)
 
