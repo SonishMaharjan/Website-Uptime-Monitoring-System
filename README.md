@@ -1,4 +1,5 @@
 # Website/API-Uptime-Monitoring-System
+A simple web server state monitoring application in Node.js.
 
 ## Table of contents
 * [General Info](#general-info)
@@ -19,7 +20,7 @@ user can add up to 5 endpoints to monitor their state. When the state of server 
 	
 ## Technologies
 Project is created with:
-* NodeJS: 12.18
+* Node.js: 12.18
 * Twilio's API
 	
 ## Setup
