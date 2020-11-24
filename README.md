@@ -11,7 +11,7 @@ A simple web server state monitoring application in Node.js.
 This application is a simple server state monitoring system developed in plain NodeJS(without libraries). The main functions includes,
 user can add up to 5 endpoints to monitor their state. When the state of server changes(goes up/goes down) the user is notified via SMS. 
 
-![Alt text](https://github.com/SonishMaharjan/Website-Uptime-Monitoring-System/blob/master/readme/app_image.png?raw=true)
+![App Image](https://github.com/SonishMaharjan/Website-Uptime-Monitoring-System/blob/master/readme/app_image.png?raw=true)
 
 ## Features
 * Can monitor up to 5 endpoints for each users.
